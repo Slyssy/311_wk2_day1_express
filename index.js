@@ -49,6 +49,7 @@ app.post('/users', (req, res) => {
 // *  this user back to the client.
 app.put('/users/:id', (req, res) => {
   const userID = req.params.id;
+
   // console.log(userID);
   const body = req.body;
   const user = users.find((user) => user._id === +userID);
@@ -72,14 +73,17 @@ app.put('/users/:id', (req, res) => {
 
 app.delete('/users/:id', (req, res) => {
   const userID = req.params.id;
-  console.log(userID);
+  // console.log(userID);
+  let deletedUser = users.find((user) => user._id === +userID);
   let newUsersArray = users.filter((user) => user._id !== +userID);
 
   if (!newUsersArray) {
     res.status(500).send('User not found.');
   } else {
     users = newUsersArray;
-    res.send(users);
+    res.send(
+      `${deletedUser.name} with the User ID of ${deletedUser._id} has been deleted.`
+    );
   }
 });
 /* END - create routes here */
